@@ -15,4 +15,4 @@ jobs:
     file: docker-concourse-vault/ci/task_hello_world.yml
     params:
       FOO: value-set-in-pipeline
-      BAR: also-set-in-pipeline
+      BAR: ((bar))
