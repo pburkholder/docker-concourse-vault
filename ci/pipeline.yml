@@ -10,5 +10,6 @@ jobs:
   public: true
   plan:
   - get: docker-concourse-vault
+    trigger: true
   - task: hello-world
     file: docker-concourse-vault/ci/task_hello_world.yml

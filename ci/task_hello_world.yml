@@ -5,6 +5,9 @@ image_resource:
   type: docker-image
   source: {repository: busybox}
 
+params:
+  FOO: fizzbuzz
+
 run:
   path: echo
-  args: [hello world]
+  args: [FOO]
