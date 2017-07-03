@@ -9,6 +9,4 @@ params:
   FOO: default-foo-value
 
 run:
-  path: echo
-  args: 
-    - $FOO
+  path: docker-concourse-vault/ci/task_hello_world.sh
