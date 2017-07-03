@@ -13,3 +13,5 @@ jobs:
     trigger: true
   - task: hello-world
     file: docker-concourse-vault/ci/task_hello_world.yml
+    params:
+      FOO: value-set-in-pipeline
