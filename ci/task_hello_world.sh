@@ -1,3 +1,4 @@
 #!/bin/sh
 
-echo $FOO
+echo FOO: $FOO
+echo BAR: $BAR
