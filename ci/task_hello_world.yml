@@ -6,8 +6,9 @@ image_resource:
   source: {repository: busybox}
 
 params:
-  FOO: fizzbuzz
+  FOO: default-foo-value
 
 run:
   path: echo
-  args: [((FOO))]
+  args: 
+    - $FOO
