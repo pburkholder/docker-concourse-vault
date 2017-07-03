@@ -10,4 +10,4 @@ params:
 
 run:
   path: echo
-  args: [FOO]
+  args: [((FOO))]
