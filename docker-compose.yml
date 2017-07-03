@@ -1,6 +1,14 @@
 version: '3'
 
 services:
+  vault:
+    image: "vault:0.7.3"
+    cap_add:
+      - IPC_LOCK
+    ports: ["8200:8200"]
+    volumes: ["./keys/vault:/vault/config"]
+    command: vault server -config /vault/config/vault.hcl 
+
   concourse-db:
     image: postgres:9.5
     environment:
@@ -25,6 +33,9 @@ services:
       CONCOURSE_POSTGRES_USER: concourse
       CONCOURSE_POSTGRES_PASSWORD: changeme
       CONCOURSE_POSTGRES_DATABASE: concourse
+      CONCOURSE_VAULT_URL: https://vault:8200
+      CONCOURSE_VAULT_TLS_INSECURE_SKIP_VERIFY: "true"
+
 
   concourse-worker:
     image: concourse/concourse
@@ -36,9 +47,3 @@ services:
     environment:
       CONCOURSE_TSA_HOST: concourse-web
   
-  vault:
-    image: "vault:0.7.3"
-    cap_add:
-      - IPC_LOCK
-    ports: ["8200:8200"]
-    volumes: [./keys/vault:/vault/config]

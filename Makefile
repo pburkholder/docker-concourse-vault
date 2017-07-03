@@ -1,7 +1,4 @@
-
-
-echo:
-	echo "Whoops"
+default: ./keys/vault/vault.hcl
 
 ./keys/worker:
 	mkdir -p keys/web keys/worker
@@ -22,10 +19,11 @@ vault: ./keys/vault/server.crt ./keys/vault/vault.hcl
 	openssl req -newkey rsa:4096 -nodes -sha256 -keyout ./keys/vault/server.key -x509 -days 365 -out ./keys/vault/server.crt
 
 define HCL
+storage "inmem" {}
 listener "tcp" {
-	address = "0.0.0.0:8200"
+	address = "127.0.0.1:8200"
 	tls_cert_file = "/vault/config/server.crt"
-	tls_key_file = "/vault/confg/server.key"
+	tls_key_file = "/vault/config/server.key"
 }
 endef 
 export HCL
