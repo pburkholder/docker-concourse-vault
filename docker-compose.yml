@@ -35,3 +35,10 @@ services:
     volumes: ["./keys/worker:/concourse-keys"]
     environment:
       CONCOURSE_TSA_HOST: concourse-web
+  
+  vault:
+    image: "vault:0.7.3"
+    cap_add:
+      - IPC_LOCK
+    ports: ["8200:8200"]
+    volumes: [./keys/vault:/vault/config]

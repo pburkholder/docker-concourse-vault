@@ -14,3 +14,22 @@ echo:
 external:
 	$f=$(echo 
 	@echo export CONCOURSE_EXTERNAL_URL=${DOCKER_HOST}:8080
+
+vault: ./keys/vault/server.crt ./keys/vault/vault.hcl
+
+./keys/vault/server.crt:
+	mkdir -p keys/vault
+	openssl req -newkey rsa:4096 -nodes -sha256 -keyout ./keys/vault/server.key -x509 -days 365 -out ./keys/vault/server.crt
+
+define HCL
+listener "tcp" {
+	address = "0.0.0.0:8200"
+	tls_cert_file = "/vault/config/server.crt"
+	tls_key_file = "/vault/confg/server.key"
+}
+endef 
+export HCL
+
+./keys/vault/vault.hcl:
+	echo "$$HCL" > $@
+
