@@ -8,5 +8,8 @@ image_resource:
 params:
   FOO: default-foo-value
 
+inputs:
+- name: docker-concourse-vault
+
 run:
   path: docker-concourse-vault/ci/task_hello_world.sh
