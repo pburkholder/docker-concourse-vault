@@ -1,0 +1,14 @@
+---
+resources:
+- name: docker-concourse-vault
+  type: git
+  source:
+    uri: https://github.com/pburkholder/docker-concourse-vault.git
+
+jobs:
+- name: job-hello-world
+  public: true
+  plan:
+  - get: docker-concourse-vault
+  - task: hello-world
+    file: docker-concourse-vault/ci/task_hello_world.yml
