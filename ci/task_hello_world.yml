@@ -6,7 +6,7 @@ image_resource:
   source: {repository: busybox}
 
 params:
-  FOO: default-foo-value
+  TASK: value-from-task.yaml
 
 inputs:
 - name: docker-concourse-vault

@@ -14,5 +14,6 @@ jobs:
   - task: hello-world
     file: docker-concourse-vault/ci/task_hello_world.yml
     params:
-      FOO: value-set-in-pipeline
-      BAR: ((bar))
+      PIPE: value-from-pipeline-yml
+      CRED: ((from-credentials))
+      VAULT: ((from-vault))
