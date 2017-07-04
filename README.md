@@ -81,4 +81,5 @@ Code: 403. Errors:
 
 ```
 vault policy-write concourse concourse_policy.hcl
-```
+export VAULT_TOKEN="22484e8d-ad5e-02fb-3b17-97a6a44d18ea"
+curl -X POST -H "X-Vault-Token:$VAULT_TOKEN" -d '{"policies":"default,concourse"}' ${VAULT_ADDR}/v1/auth/approle/role/concourse_role

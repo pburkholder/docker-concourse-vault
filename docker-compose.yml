@@ -21,7 +21,7 @@ services:
   concourse-web:
     image: concourse/concourse
     links: [concourse-db]
-    command: web --vault-auth-param role_id=ca13a4c6-ee85-d3e4-c0de-e06f413742ae --vault-auth-param secret_id=09d930bb-ef33-9b28-01ad-94931ce0c214 --vault-insecure-skip-verify
+    command: web  --vault-insecure-skip-verify --vault-auth-param role_id=ca13a4c6-ee85-d3e4-c0de-e06f413742ae --vault-auth-param secret_id=580f921d-5e41-837b-afc8-de1053de537f
     depends_on: [concourse-db]
     ports: ["8080:8080"]
     volumes: ["./keys/web:/concourse-keys"]
@@ -37,6 +37,7 @@ services:
       CONCOURSE_VAULT_URL: https://vault:8200
       CONCOURSE_VAULT_TLS_INSECURE_SKIP_VERIFY: "true"
       CONCOURSE_VAULT_AUTH_BACKEND: approle
+      CONCOURSE_VAULT_PATH_PREFIX: /secret/concourse
 
   concourse-worker:
     image: concourse/concourse
