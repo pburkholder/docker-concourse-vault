@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 
 services:
   vault:
@@ -6,7 +6,8 @@ services:
     cap_add:
       - IPC_LOCK
     ports: ["8200:8200"]
-    volumes: ["./keys/vault:/vault/config"]
+    volumes: 
+      - ./keys/vault:/vault/config
     command: vault server -config /vault/config/vault.hcl 
 
   concourse-db:
@@ -20,7 +21,7 @@ services:
   concourse-web:
     image: concourse/concourse
     links: [concourse-db]
-    command: web
+    command: web --vault-auth-param role_id=12ff1a28-445f-9fc2-d453-959b43adbddc --vault-auth-param secret_id=a9d2fc5d-36fc-4035-94dd-6686a3cc442b --vault-insecure-skip-verify
     depends_on: [concourse-db]
     ports: ["8080:8080"]
     volumes: ["./keys/web:/concourse-keys"]
@@ -35,7 +36,7 @@ services:
       CONCOURSE_POSTGRES_DATABASE: concourse
       CONCOURSE_VAULT_URL: https://vault:8200
       CONCOURSE_VAULT_TLS_INSECURE_SKIP_VERIFY: "true"
-
+      CONCOURSE_VAULT_AUTH_BACKEND: approle
 
   concourse-worker:
     image: concourse/concourse

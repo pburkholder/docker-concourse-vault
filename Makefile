@@ -1,4 +1,4 @@
-default: ./keys/vault/vault.hcl
+default: vault
 
 ./keys/worker:
 	mkdir -p keys/web keys/worker
@@ -12,16 +12,21 @@ external:
 	$f=$(echo 
 	@echo export CONCOURSE_EXTERNAL_URL=${DOCKER_HOST}:8080
 
-vault: ./keys/vault/server.crt ./keys/vault/vault.hcl
+vault: ./keys/vault/server.crt ./keys/vault/vault.hcl ./keys/vault_file
+
+./keys/vault_file:
+	mkdir -p $@
 
 ./keys/vault/server.crt:
 	mkdir -p keys/vault
 	openssl req -newkey rsa:4096 -nodes -sha256 -keyout ./keys/vault/server.key -x509 -days 365 -out ./keys/vault/server.crt
 
 define HCL
-storage "inmem" {}
+storage "file" {
+	path = "/vault/file"
+}
 listener "tcp" {
-	address = "127.0.0.1:8200"
+	address = "0.0.0.0:8200"
 	tls_cert_file = "/vault/config/server.crt"
 	tls_key_file = "/vault/config/server.key"
 }

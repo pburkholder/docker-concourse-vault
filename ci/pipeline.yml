@@ -16,4 +16,4 @@ jobs:
     params:
       PIPE: value-from-pipeline-yml
       CRED: ((from-credentials))
-#      VAULT: ((from-vault))
+      VAULT: ((from-vault))
