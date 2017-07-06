@@ -21,8 +21,7 @@ services:
   concourse-web:
     image: concourse/concourse:3.3.1
     links: [concourse-db]
-    #command: web --vault-insecure-skip-verify --vault-auth-param role_id="${CONCOURSE_ROLE_ID}" --vault-auth-param secret_id="${CONCOURSE_SECRET_ID}"
-    command: web --vault-insecure-skip-verify --vault-auth-param role_id=bee9fa37-54fe-4ffc-0bdd-f875fefb10a1 --vault-auth-param secret_id=5620e0d6-32f5-aac4-83b5-ffc38668aecb
+    command: web --vault-insecure-skip-verify --vault-auth-param role_id="${CONCOURSE_ROLE_ID}" --vault-auth-param secret_id="${CONCOURSE_SECRET_ID}"
     depends_on: [concourse-db]
     ports: ["8080:8080"]
     volumes: ["./keys/web:/concourse-keys"]
