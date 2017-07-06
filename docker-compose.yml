@@ -44,6 +44,7 @@ services:
     privileged: true
     links: [concourse-web]
     depends_on: [concourse-web]
+    # The naive driver workaround for https://github.com/concourse/concourse/issues/1230
     command: "worker --baggageclaim-driver=naive"
     volumes: ["./keys/worker:/concourse-keys"]
     environment:

@@ -11,10 +11,6 @@ keys/concourse_keys:
 	cp ./keys/web/tsa_host_key.pub ./keys/worker
 	touch keys/concourse_keys
 
-external:
-	$f=$(echo 
-	@echo export CONCOURSE_EXTERNAL_URL=${DOCKER_HOST}:8080
-
 vault: ./keys/vault/server.crt ./keys/vault/vault.hcl
 
 ./keys/vault/server.crt:
