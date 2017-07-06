@@ -1,25 +1,25 @@
-default: vault
+default: vault concourse
 
-./keys/worker:
+concourse: keys/concourse_keys
+
+keys/concourse_keys: 
 	mkdir -p keys/web keys/worker
 	ssh-keygen -t rsa -f ./keys/web/tsa_host_key -N ''
 	ssh-keygen -t rsa -f ./keys/web/session_signing_key -N ''
 	ssh-keygen -t rsa -f ./keys/worker/worker_key -N ''
 	cp ./keys/worker/worker_key.pub ./keys/web/authorized_worker_keys
 	cp ./keys/web/tsa_host_key.pub ./keys/worker
+	touch keys/concourse_keys
 
 external:
 	$f=$(echo 
 	@echo export CONCOURSE_EXTERNAL_URL=${DOCKER_HOST}:8080
 
-vault: ./keys/vault/server.crt ./keys/vault/vault.hcl ./keys/vault_file
-
-./keys/vault_file:
-	mkdir -p $@
+vault: ./keys/vault/server.crt ./keys/vault/vault.hcl
 
 ./keys/vault/server.crt:
 	mkdir -p keys/vault
-	openssl req -newkey rsa:4096 -nodes -sha256 -keyout ./keys/vault/server.key -x509 -days 365 -out ./keys/vault/server.crt
+	openssl req -newkey rsa:4096 -nodes -sha256 -keyout ./keys/vault/server.key -x509 -days 365 -out ./keys/vault/server.crt -subj /C=US/ST=DC/L=Washington/O=GSA/OU=18F/CN=vault
 
 define HCL
 storage "file" {
